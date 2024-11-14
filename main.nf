@@ -29,7 +29,7 @@ process sentieon_all {
     -r ${ref} \
     --r1-fastq ${r1_fastq} \
     --r2-fastq ${r2_fastq} \
-    --readgroups "@RG\tID:HG002-1\tSM:HG002\tLB:HG002-LB-1\tPL:ILLUMINA" \
+    --readgroups ${readgroups} \
     -m ${model} \
     -d ${dbsnp} \
     -t 120 \
