@@ -1,5 +1,5 @@
 process sentieon_all {
-  container '028616136117.dkr.ecr.us-east-1.amazonaws.com/sentieon-cli'
+  container 'ghcr.io/ucl-medical-genomics/sentieon-cli'
   publishDir "${params.output_dir}", mode: 'copy'
 
   cpus 128
