@@ -13,6 +13,7 @@ process sentieon_all {
   path(r2_fastq)
   val(readgroups)
   path(model)
+  path(sentieon_license)
 
   output:
   path("${sample_id}.vcf.gz")
@@ -23,6 +24,7 @@ process sentieon_all {
   for i in ref_index/*; do
     ln -s \$i .
   done
+  export SENTIEON_LICENSE=${sentieon_license}
   sentieon-cli dnascope \
     -r ${ref} \
     --r1-fastq ${r1_fastq} \
@@ -46,6 +48,7 @@ workflow {
     params.r1_fastq,
     params.r2_fastq,
     params.readgroups,
-    params.model
+    params.model,
+    params.sentieon_license
   )
 }
