@@ -21,7 +21,7 @@ process sentieon_all {
   """
   ls -lh
   for i in ref_index/*; do
-    ln -s $i .
+    ln -s \$i .
   done
   sentieon-cli dnascope \
     -r ${ref} \
@@ -32,7 +32,6 @@ process sentieon_all {
     -d ${dbsnp} \
     -t 120 \
     -g \
-    --dry-run \
     ${sample_id}.vcf.gz
   """
 }
