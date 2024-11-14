@@ -15,8 +15,12 @@ process sentieon_all {
   val(readgroups)
   path(model)
 
+  output:
+  path("${sample_id}.vcf.gz")
+
   script:
   """
+  ls -lh
   sentieon-cli dnascope \
     -r ${ref} \
     --r1-fastq ${r1_fastq} \
@@ -32,7 +36,7 @@ process sentieon_all {
 }
 
 workflow {
-  main(
+  sentieon_all(
     params.sample_id,
     params.ref,
     params.ref_index,
@@ -42,6 +46,6 @@ workflow {
     params.r1_fastq,
     params.r2_fastq,
     params.readgroups,
-    params.model,
+    params.model
   )
 }
