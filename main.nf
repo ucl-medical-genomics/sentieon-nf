@@ -6,8 +6,7 @@ process sentieon_all {
   input:
   val(sample_id)
   path(ref)
-  path(ref_index)
-  path(bwa_index), name: "bwa_index/*"
+  path(ref_index), name: "ref_index"
   path(dbsnp)
   path(dbsnp_index)
   path(r1_fastq)
@@ -21,6 +20,9 @@ process sentieon_all {
   script:
   """
   ls -lh
+  for i in ref_index/*; do
+    ln -s $i .
+  done
   sentieon-cli dnascope \
     -r ${ref} \
     --r1-fastq ${r1_fastq} \
@@ -40,7 +42,6 @@ workflow {
     params.sample_id,
     params.ref,
     params.ref_index,
-    params.bwa_index,
     params.dbsnp,
     params.dbsnp_index,
     params.r1_fastq,
