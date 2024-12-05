@@ -1,2 +1,2 @@
 sample_id,r1_fastq,r2_fastq
-uk35C650,s3://pgp650/uk35C650_1.fastq.gz,s3://pgp650/uk35C650_2.fastq.gz
+uk35C650,s3://pgp650/data/uk35C650/uk35C650_1.fastq.gz,s3://pgp650/data/uk35C650/uk35C650_2.fastq.gz
