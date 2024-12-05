@@ -7,7 +7,8 @@ process sentieon_all {
   input:
   tuple val(sample_id), path(r1_fastq), path(r2_fastq)
   path(ref)
-  path(ref_index), name: "ref_index"
+  path(fasta_index)
+  path(bwa_index)
   path(dbsnp)
   path(dbsnp_index)
   val(readgroups)
@@ -19,25 +20,15 @@ process sentieon_all {
 
   script:
   """
-  for i in ref_index/*; do
-    ln -s \$i .
-  done
   export SENTIEON_LICENSE=${sentieon_license}
   sentieon-cli dnascope \
-    -r ${ref} \
-    --r1-fastq ${r1_fastq} \
-    --r2-fastq ${r2_fastq} \
-    --readgroups '${readgroups}' \
-    -m ${model} \
-    -d ${dbsnp} \
-    -t 120 \
-    -g \
-    ${sample_id}.vcf.gz
+    -r ${ref} --r1-fastq ${r1_fastq} --r2-fastq ${r2_fastq} \
+    --readgroups '${readgroups}' -m ${model} -d ${dbsnp} \
+    -t 120 ${sample_id}.vcf.gz
   """
 }
 
 workflow {
-
   Channel
       .fromPath(params.sample_sheet)
       .splitCsv(header: true, sep: ',', strip: true)
@@ -49,7 +40,8 @@ workflow {
   sentieon_all(
     samples,
     params.ref,
-    params.ref_index,
+    params.fasta_index,
+    params.bwa_index,
     params.dbsnp,
     params.dbsnp_index,
     params.readgroups,
